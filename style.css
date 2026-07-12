@@ -51,15 +51,15 @@ img {
 
 .site-header h1 {
     margin: 0;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 300;
+    font-size: clamp(1.2rem, 3.5vw, 2rem);
+    font-weight: 400;
     letter-spacing: 0.04em;
 }
 
 .site-header p {
     margin: 12px 0 0;
     color: #000000;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
 }
 
 
@@ -71,16 +71,16 @@ img {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #999;
+    color: #000000;
     font-size: 0.85rem;
 }
 
 .breadcrumb a {
-    color: #555;
+    color: #000000;
 }
 
 .breadcrumb a:hover {
-    color: #000;
+    color: #000000;
 }
 
 
@@ -98,7 +98,7 @@ img {
 .navigation-card {
     display: inline-block;
     padding: 4px 8px;
-    color: #333;
+    color: #000000;
     background: none;
     border: none;
     text-align: center;
