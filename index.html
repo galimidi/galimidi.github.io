@@ -171,9 +171,13 @@
   /* Research */
   .project { padding: 1.5rem 0; border-top: 1px solid var(--rule); }
   .project:last-of-type { border-bottom: 1px solid var(--rule); }
+  .current { margin-top: 1rem; }
+  .current h3 { font-weight: 400; font-style: italic; margin-bottom: 0.6rem; }
+  .current .project h4 { font-weight: 500; font-size: 1.0625rem; margin: 0 0 0.35rem; }
+  .current .project p { font-size: 1.0625rem; }
   .earlier { margin-top: 3rem; }
   .earlier h3 { font-weight: 400; font-style: italic; margin-bottom: 0.6rem; }
-  .earlier > p { color: var(--muted); }
+  /* .earlier > p { color: var(--muted); } */
   .earlier .project h4 { font-weight: 500; font-size: 1.0625rem; margin: 0 0 0.35rem; }
   .earlier .project p { font-size: 1.0625rem; }
   .project p { margin-bottom: 0.5rem; }
@@ -288,9 +292,11 @@
       <p>I’m interested in how we get robust cosmology out of galaxy surveys: making mock catalogs realistic enough to test analyses on, and making sure the statistics we measure from them mean what we think they mean.</p>
 
       <article class="project">
+        <div class="current">
         <h3>Covariance of the power spectrum</h3>
-        <p> Working on implementing and validating analytical methods to calculate the covariance matrix of the 
-            power spectrum multipoles in the general multi-tracer case. </p>
+        <p> I'm currently working on implementing and validating analytical methods to calculate the covariance matrix of the 
+            power spectrum multipoles in the general multi-tracer case as
+          part of the DESI collaboration.</p>
         <!-- <p class="tools">JAX, log-normal mocks, Kaiser redshift-space distortions, power spectrum multipoles</p> -->
       </article>
 
@@ -302,16 +308,19 @@
 
       <div class="earlier">
         <h3>Earlier work</h3>
-        <p>Before cosmology I worked on protoplanetary disks.</p>
+        <p>Before cosmology I worked on investigating
+          dust depletion in protoplanetary disks, with a focus on high accretors.
+          I have also explored the use of machine learning, more specifically simulation-based inference, to infer disk properties 
+          from observations.</p>
 
-        <article class="project">
+        <!-- <article class="project">
           <h4>Dust depletion in high accretors</h4>
           <p>Investigated the connection between calcium depletion and dust evolution in rapidly accreting protoplanetary disks.</p>
         </article>
         <article class="project">
           <h4>ML for protoplanetary disks</h4>
           <p>Used simulation based inference to constrain the properties of protoplanetary disks from mid-IR spectra.</p>
-        </article>
+        </article> -->
       </div>
     </section>
 
