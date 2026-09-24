@@ -1,9 +1,577 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Eylul Galimidi</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eylul Galimidi</title>
+<meta name="description" content="Eylul Galimidi, student at University of Michigan.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23121A2B'/%3E%3Cpath d='M6 9 L14 15 L25 8 M14 15 L12 25 M14 15 L26 21' stroke='%238FA8D6' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='14' cy='15' r='3' fill='%23F4E3BD'/%3E%3Ccircle cx='25' cy='8' r='1.8' fill='%23E3EAF6'/%3E%3Ccircle cx='26' cy='21' r='1.8' fill='%23E3EAF6'/%3E%3Ccircle cx='12' cy='25' r='1.5' fill='%23E3EAF6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EDF0F3;
+    --ink: #19202E;
+    --muted: #5B6576;
+    --rule: #CBD2DB;
+    --link: #2A4894;
+    --figure: #121A2B;
+    --serif: "Spectral", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: "Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #151B26;
+      --ink: #E4E8EE;
+      --muted: #97A1B1;
+      --rule: #2C3545;
+      --link: #9DB5F2;
+      --figure: #0D1320;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #151B26; --ink: #E4E8EE; --muted: #97A1B1;
+    --rule: #2C3545; --link: #9DB5F2; --figure: #0D1320;
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.1875rem;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, canvas { max-width: 100%; }
+
+  a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 2px; }
+
+  /* Layout: a quiet index column on the left, reading column on the right */
+  .shell {
+    display: grid;
+    grid-template-columns: 17rem minmax(0, 40rem);
+    gap: 4rem;
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 5.5rem 2rem 4rem;
+  }
+  .masthead { position: sticky; top: calc(5.5rem + env(safe-area-inset-top, 0px)); align-self: start; }
+  .name {
+    font-weight: 300;
+    font-size: 2.25rem;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.6rem;
+  }
+  .name a { color: inherit; text-decoration: none; }
+  .role {
+    font-family: var(--sans);
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--muted);
+    margin: 0 0 2.75rem;
+  }
+  .nav { list-style: none; margin: 0; padding: 0; font-family: var(--sans); font-size: 1.125rem; }
+  .nav li + li { margin-top: 0.45rem; }
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.2rem 0;
+  }
+  .nav a::before {
+    content: "";
+    width: 1.2rem;
+    height: 0.48rem;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    transform: rotate(-25deg);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .nav a:hover { color: var(--ink); }
+  .nav a[aria-current="page"] { color: var(--ink); }
+  .nav a[aria-current="page"]::before { opacity: 1; }
+
+  main section[hidden] { display: none; }
+  h2 {
+    font-weight: 300;
+    font-size: 2.25rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.75rem;
+  }
+  h2:focus { outline: none; }
+  h3 { font-weight: 500; font-size: 1.1875rem; line-height: 1.35; margin: 0 0 0.4rem; }
+  p { margin: 0 0 1.1rem; }
+
+  /* Figure 1: the one loud thing on the page */
+  .figure { margin: 2.25rem 0 2.5rem; }
+  .plate {
+    position: relative;
+    background: var(--figure);
+    border-radius: 12px;
+    aspect-ratio: 2 / 1;
+    width: 100%;
+    overflow: hidden;
+  }
+  .plate canvas { display: block; width: 100%; height: 100%; }
+  .plate .scale {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 10%;
+    text-align: center;
+    white-space: nowrap;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    color: #C9D2E3;
+  }
+  .plate .scale::before { content: ""; display: block; width: 100%; height: 1px; background: #C9D2E3; margin-bottom: 0.3rem; }
+  .plate .scale span { display: block; margin: 0 -50%; text-shadow: 0 0 4px #121A2B, 0 0 2px #121A2B; }
+  .figure-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 0.9rem;
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .figure-controls input { flex: 1; accent-color: var(--link); min-width: 0; }
+  .figure-controls output { font-variant-numeric: tabular-nums; min-width: 2.5ch; color: var(--ink); }
+  figcaption {
+    max-width: 36rem;
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  figcaption b { font-weight: 500; color: var(--ink); }
+
+  .lede { font-size: 1.3125rem; line-height: 1.55; font-weight: 300; }
+  .aside-links { font-family: var(--sans); font-size: 0.9375rem; margin-top: 1.75rem; }
+  .aside-links a + a { margin-left: 1.25rem; }
+
+  /* Research */
+  .project { padding: 1.5rem 0; border-top: 1px solid var(--rule); }
+  .project:last-of-type { border-bottom: 1px solid var(--rule); }
+  .earlier { margin-top: 3rem; }
+  .earlier h3 { font-weight: 400; font-style: italic; margin-bottom: 0.6rem; }
+  .earlier > p { color: var(--muted); }
+  .earlier .project h4 { font-weight: 500; font-size: 1.0625rem; margin: 0 0 0.35rem; }
+  .earlier .project p { font-size: 1.0625rem; }
+  .project p { margin-bottom: 0.5rem; }
+  .tools { font-family: var(--sans); font-size: 0.875rem; color: var(--muted); margin: 0; }
+
+  /* Publications: years hang in the margin */
+  .year-group { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 1rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); margin-bottom: 0.6rem; }
+  .year { font-family: var(--sans); font-size: 0.9375rem; color: var(--muted); padding-top: 0.2rem; font-variant-numeric: tabular-nums; }
+  .pubs { list-style: none; margin: 0; padding: 0; }
+  .pubs li { margin-bottom: 1.4rem; }
+  .pub-title { display: block; font-weight: 500; line-height: 1.4; margin-bottom: 0.2rem; }
+  .pub-meta { display: block; font-size: 1rem; color: var(--muted); line-height: 1.5; }
+  .pub-meta strong { font-weight: 500; color: var(--ink); }
+  .pub-links { font-family: var(--sans); font-size: 0.875rem; margin-top: 0.3rem; }
+  .pub-links a + a { margin-left: 1rem; }
+  .note { font-family: var(--sans); font-size: 0.9375rem; color: var(--muted); }
+
+  /* Contact */
+  .contact { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 0.9rem 1.25rem; margin: 0; }
+  .contact dt { font-family: var(--sans); font-size: 0.9375rem; color: var(--muted); padding-top: 0.2rem; }
+  .contact dd { margin: 0; overflow-wrap: anywhere; }
+
+  footer { font-family: var(--sans); font-size: 0.8125rem; color: var(--muted); margin-top: 4rem; }
+
+  @media (max-width: 52rem) {
+    .shell { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; padding: 2.5rem 1.4rem 3rem; }
+    .masthead { position: static; }
+    .name { font-size: 1.9rem; }
+    .role { margin-bottom: 1.4rem; }
+    .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: 0.6rem;
+      font-size: clamp(0.875rem, 4.1vw, 1.0625rem);
+      white-space: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav li + li { margin-top: 0; }
+    .nav a::before { display: none; }
+    .nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 0.35em; }
+    h2 { font-size: 1.9rem; }
+    body { font-size: 1.125rem; }
+  }
+  @media (max-width: 30rem) {
+    .year-group { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+    .contact { grid-template-columns: minmax(0, 1fr); gap: 0.1rem; }
+    .contact dd { margin-bottom: 0.9rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
 </head>
 <body>
-    <h1>hello, world! welcome to my website.</h1>
+<div class="shell">
+
+  <header class="masthead">
+    <p class="name"><a href="#about">Eylul Galimidi</a></p>
+    <p class="role">University of Michigan</p>
+    <nav aria-label="Sections">
+      <ul class="nav">
+        <li><a href="#about">About me</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ABOUT -->
+    <section id="about" aria-labelledby="about-h">
+      <h2 id="about-h" tabindex="-1">About me</h2>
+
+      <p class="lede">Hello! I’m an undergraduate student at the University of Michigan. 
+        My research is focused on precision survey cosmology using computational and statistical 
+        techniques to understand the large-scale structure of the universe.</p>
+      <!-- <p>
+        cosmologist working on large-scale structure: what the distribution of galaxies across hundreds of megaparsecs can tell us about the contents and history of the universe.</p> -->
+
+      <figure class="figure">
+        <div class="plate">
+          <canvas id="web" width="1400" height="700" role="img" aria-label="Simulated slice of the cosmic web: dense knots joined by filaments around empty voids"></canvas>
+          <span class="scale"><span>50 Mpc/h</span></span>
+        </div>
+        <div class="figure-controls">
+          <label for="zslider">Redshift</label>
+          <input id="zslider" type="range" min="0" max="1000" value="1000" step="1" aria-describedby="fig1-cap">
+          <output for="zslider" id="z-out">z = 0</output>
+        </div>
+        <figcaption id="fig1-cap"><b>Figure 1.</b> Structure growing from a Gaussian random field under the Zel’dovich approximation, computed in your browser! 
+            Slide left to go back in time.</figcaption>
+      </figure>
+      <p>Most of my work is building forward models, creating simulated galaxy catalogs that look 
+        like real surveys, and developing and applying tools to measure clustering statistics from them.</p>
+      <p>I came to cosmology from star and planet formation, where I investigated 
+        dust evolution in protoplanetary disks using self-consistent models of disk structure and emission.</p>
+        <p> In my free time, I like to bake cookies.</p>
+
+      <p class="aside-links">
+        <a href="cv.pdf">CV (PDF)</a>
+        <a href="https://github.com/your-username">GitHub</a>
+        <a href="https://orcid.org/0000-0000-0000-0000">ORCID</a>
+      </p>
+    </section>
+
+    <!-- RESEARCH -->
+    <section id="research" aria-labelledby="research-h" hidden>
+      <h2 id="research-h" tabindex="-1">Research</h2>
+      <p>I’m interested in how we get robust cosmology out of galaxy surveys: making mock catalogs realistic enough to test analyses on, and making sure the statistics we measure from them mean what we think they mean.</p>
+
+      <article class="project">
+        <h3>Covariance of the power spectrum</h3>
+        <p>I make matter fields :) And look at their statistics :) Power spectrum multipoles</p>
+        <!-- <p class="tools">JAX, log-normal mocks, Kaiser redshift-space distortions, power spectrum multipoles</p> -->
+      </article>
+
+      <!-- <article class="project">
+        <h3>Next project title</h3>
+        <p>Add a second large-scale structure project here, or remove this block until you have one.</p>
+        <p class="tools">Methods and tools</p>
+      </article> -->
+
+      <div class="earlier">
+        <h3>Earlier work</h3>
+        <p>Before cosmology I worked on protoplanetary disks :(</p>
+
+        <article class="project">
+          <h4>Dust depletion in high accretors</h4>
+          <p>lol</p>
+        </article>
+        <article class="project">
+          <h4>ML for protoplanetary disks</h4>
+          <p>Using simulation based inference to constrain the properties of protoplanetary disks from mid-IR spectra.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" aria-labelledby="pubs-h" hidden>
+      <h2 id="pubs-h" tabindex="-1">Publications</h2>
+
+      <div class="year-group">
+        <div class="year">2026</div>
+        <ol class="pubs" reversed>
+          <li>
+            <span class="pub-title">Connecting Calcium Depletion and Dust Evolution in the Rapid Accretor T28 </span>
+            <span class="pub-meta"><strong>Galimidi, E.</strong> et al. <em>The Astrophysical Journal</em>, submitted.</span>
+            <div class="pub-links"><a href="#">arXiv</a><a href="#">ADS</a></div>
+          </li>
+        <li>
+            <span class="pub-title">Survey window effects on the covariance of multi-tracer power spectrum multipoles</span>
+            <span class="pub-meta">Alves, O., Adamo, J., <strong>Galimidi, E.</strong>, et al. <em>Journal of Cosmology and Astroparticle Physics</em>, in prep.</span>
+            <div class="pub-links"><a href="#">arXiv</a><a href="#">ADS</a></div>
+          </li> 
+        </ol>
+      </div>
+
+      <!-- <div class="year-group">
+        <div class="year">2025</div>
+        <ol class="pubs" reversed>
+          <li>
+            <span class="pub-title">Title of a second paper</span>
+            <span class="pub-meta">Coauthor, A., <strong>Galimidi, E.</strong>, et al. <em>Monthly Notices of the Royal Astronomical Society</em>, 000, 0000</span>
+            <div class="pub-links"><a href="#">arXiv</a><a href="#">ADS</a><a href="#">Code</a></div>
+          </li>
+          <li>
+            <span class="pub-title">Title of a third paper</span>
+            <span class="pub-meta"><strong>Galimidi, E.</strong> &amp; Coauthor, A. <em>Astronomy &amp; Astrophysics</em>, 000, A00</span>
+            <div class="pub-links"><a href="#">arXiv</a><a href="#">ADS</a></div>
+          </li>
+        </ol>
+      </div> -->
+
+      <!-- <p class="note">The full list is on <a href="#">NASA ADS</a>.</p> -->
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-labelledby="contact-h" hidden>
+      <h2 id="contact-h" tabindex="-1">Contact</h2>
+      <p>The best way to reach me is by email. I’m happy to hear from anyone interested in cosmology, code, or collaboration.</p>
+      <dl class="contact">
+        <dt>Email</dt>
+        <dd><a href="mailto:eylul@umich.edu">eylul@umich.edu</a></dd>
+        <!-- <dt>Office</dt>
+        <dd>Room 000, Department of Astronomy<br>University of Michigan, Ann Arbor, MI</dd> -->
+        <dt>GitHub</dt>
+        <dd><a href="https://github.com/galimidi">github.com/galimidi</a></dd>
+        <dt>ORCID</dt>
+        <dd><a href="https://orcid.org/0009-0000-0630-5735">0009-0000-0630-5735</a></dd>
+      </dl>
+    </section>
+
+    <footer>Last updated September 2026</footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  /* ---------- Section switching (works on GitHub Pages, no build step) ---------- */
+  var ids = ["about", "research", "publications", "contact"];
+  var links = document.querySelectorAll(".nav a");
+
+  function show(id, moveFocus) {
+    if (ids.indexOf(id) === -1) id = "about";
+    ids.forEach(function (s) {
+      document.getElementById(s).hidden = (s !== id);
+    });
+    links.forEach(function (a) {
+      if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    var titles = { about: "About", research: "Research", publications: "Publications", contact: "Contact" };
+    document.title = "Eylul Galimidi | " + titles[id];
+    if (moveFocus) {
+      var h = document.querySelector("#" + id + " h2");
+      if (h) h.focus({ preventScroll: true });
+      window.scrollTo(0, 0);
+    }
+  }
+  window.addEventListener("hashchange", function () { show(location.hash.slice(1), true); });
+  show(location.hash.slice(1), false);
+
+  /* ---------- Figure 1: the cosmic web under the Zel'dovich approximation ---------- */
+  var canvas = document.getElementById("web");
+  var ctx = canvas.getContext("2d");
+  var W = canvas.width, H = canvas.height;
+  var slider = document.getElementById("zslider");
+  var out = document.getElementById("z-out");
+
+  var G = 512, NP = G * G;          // particles on a G x G grid, box = 500 Mpc/h
+  var off = document.createElement("canvas");
+  off.width = G; off.height = G;
+  var octx = off.getContext("2d");
+  var img = octx.createImageData(G, G);
+
+  // In-place radix-2 FFT
+  function fft1(re, im, inv) {
+    var n = re.length, i, j, k, t;
+    for (i = 1, j = 0; i < n; i++) {
+      var bit = n >> 1;
+      for (; j & bit; bit >>= 1) j ^= bit;
+      j ^= bit;
+      if (i < j) { t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; }
+    }
+    for (var len = 2; len <= n; len <<= 1) {
+      var ang = 2 * Math.PI / len * (inv ? 1 : -1), wr = Math.cos(ang), wi = Math.sin(ang);
+      for (i = 0; i < n; i += len) {
+        var cr = 1, ci = 0;
+        for (k = 0; k < len / 2; k++) {
+          var a = i + k, b = a + len / 2;
+          var tr = re[b] * cr - im[b] * ci, ti = re[b] * ci + im[b] * cr;
+          re[b] = re[a] - tr; im[b] = im[a] - ti; re[a] += tr; im[a] += ti;
+          var ncr = cr * wr - ci * wi; ci = cr * wi + ci * wr; cr = ncr;
+        }
+      }
+    }
+    if (inv) for (i = 0; i < n; i++) { re[i] /= n; im[i] /= n; }
+  }
+  function fft2(re, im, inv) {
+    var r = new Float64Array(G), m = new Float64Array(G), x, y;
+    for (y = 0; y < G; y++) {
+      for (x = 0; x < G; x++) { r[x] = re[y * G + x]; m[x] = im[y * G + x]; }
+      fft1(r, m, inv);
+      for (x = 0; x < G; x++) { re[y * G + x] = r[x]; im[y * G + x] = m[x]; }
+    }
+    for (x = 0; x < G; x++) {
+      for (y = 0; y < G; y++) { r[y] = re[y * G + x]; m[y] = im[y * G + x]; }
+      fft1(r, m, inv);
+      for (y = 0; y < G; y++) { re[y * G + x] = r[y]; im[y * G + x] = m[y]; }
+    }
+  }
+
+  // Seeded Gaussian white noise, so the same universe appears on every visit
+  var seed = 20260923;
+  function rand() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  function gauss() { var u = rand() || 1e-12, v = rand(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+
+  var dr = new Float64Array(NP), di = new Float64Array(NP);
+  for (var q = 0; q < NP; q++) dr[q] = gauss();
+  fft2(dr, di, false);
+
+  // Displacement field psi_k = i k / k^2 * delta_k, with a smoothed power-law spectrum
+  var xr = new Float64Array(NP), xi = new Float64Array(NP);
+  var yr = new Float64Array(NP), yi = new Float64Array(NP);
+  var nIdx = -1.0, kc = 30;
+  for (var iy = 0; iy < G; iy++) {
+    var ky = iy < G / 2 ? iy : iy - G;
+    for (var ix = 0; ix < G; ix++) {
+      var kx = ix < G / 2 ? ix : ix - G;
+      var k2 = kx * kx + ky * ky, id = iy * G + ix;
+      if (k2 === 0 || ix === G / 2 || iy === G / 2) continue;
+      var amp = Math.pow(k2, nIdx / 4) * Math.exp(-k2 / (4 * kc * kc));
+      var ar = dr[id] * amp, ai = di[id] * amp;
+      xr[id] = -kx * ai / k2; xi[id] = kx * ar / k2;
+      yr[id] = -ky * ai / k2; yi[id] = ky * ar / k2;
+    }
+  }
+  fft2(xr, xi, true);
+  fft2(yr, yi, true);
+  var rms = 0;
+  for (q = 0; q < NP; q++) rms += xr[q] * xr[q] + yr[q] * yr[q];
+  rms = Math.sqrt(rms / NP);
+  var DISP = 5.6 / rms;             // rms displacement today, in grid cells
+  var psx = new Float32Array(NP), psy = new Float32Array(NP);
+  for (q = 0; q < NP; q++) { psx[q] = xr[q] * DISP; psy[q] = yr[q] * DISP; }
+  dr = di = xr = xi = yr = yi = null;
+
+  // Linear growth factor for flat LCDM (Carroll, Press & Turner 1992), D(z=0) = 1
+  var Om0 = 0.31;
+  function gfac(a) {
+    var E2 = Om0 / (a * a * a) + (1 - Om0), Om = Om0 / (a * a * a) / E2, OL = 1 - Om;
+    return 2.5 * Om / (Math.pow(Om, 4 / 7) - OL + (1 + Om / 2) * (1 + OL / 70));
+  }
+  var g0 = gfac(1);
+  function growth(a) { return a * gfac(a) / g0; }
+
+  // Colour map: plate navy through steel blue to pale blue-white, warming slightly in the densest knots
+  var stops = [[0, 18, 26, 43], [0.3, 38, 58, 102], [0.58, 112, 146, 204], [0.82, 222, 232, 247], [1, 255, 236, 196]];
+  var lut = new Uint8ClampedArray(256 * 3);
+  for (var li = 0; li < 256; li++) {
+    var tt = li / 255, si = 0;
+    while (si < stops.length - 2 && tt > stops[si + 1][0]) si++;
+    var s0 = stops[si], s1 = stops[si + 1], f = (tt - s0[0]) / (s1[0] - s0[0]);
+    for (var c = 0; c < 3; c++) lut[li * 3 + c] = s0[c + 1] + f * (s1[c + 1] - s0[c + 1]);
+  }
+
+  var rho = new Float32Array(NP), tmp = new Float32Array(NP);
+  // Periodic [1 2 1] binomial smoothing, removes the particle-lattice pattern in voids
+  function smooth(f) {
+    var x, y, r;
+    for (y = 0; y < G; y++) {
+      r = y * G;
+      for (x = 0; x < G; x++) tmp[r + x] = 0.25 * f[r + (x + G - 1) % G] + 0.5 * f[r + x] + 0.25 * f[r + (x + 1) % G];
+    }
+    for (y = 0; y < G; y++) {
+      var up = ((y + G - 1) % G) * G, dn = ((y + 1) % G) * G;
+      r = y * G;
+      for (x = 0; x < G; x++) f[r + x] = 0.25 * tmp[up + x] + 0.5 * tmp[r + x] + 0.25 * tmp[dn + x];
+    }
+  }
+  function render(D) {
+    rho.fill(0);
+    for (var y = 0; y < G; y++) {
+      for (var x = 0; x < G; x++) {
+        var p = y * G + x;
+        var px = x + D * psx[p], py = y + D * psy[p];
+        px -= Math.floor(px / G) * G; py -= Math.floor(py / G) * G;
+        var x0 = px | 0, y0 = py | 0, fx = px - x0, fy = py - y0;
+        var x1 = (x0 + 1) % G, y1 = (y0 + 1) % G;
+        rho[y0 * G + x0] += (1 - fx) * (1 - fy);
+        rho[y0 * G + x1] += fx * (1 - fy);
+        rho[y1 * G + x0] += (1 - fx) * fy;
+        rho[y1 * G + x1] += fx * fy;
+      }
+    }
+    smooth(rho);
+    var d = img.data;
+    for (var i = 0; i < NP; i++) {
+      var t = (Math.log(rho[i] + 0.04) / Math.LN10 + 0.45) / 1.2;
+      var L = t <= 0 ? 0 : t >= 1 ? 255 : (t * 255) | 0;
+      d[i * 4] = lut[L * 3]; d[i * 4 + 1] = lut[L * 3 + 1]; d[i * 4 + 2] = lut[L * 3 + 2]; d[i * 4 + 3] = 255;
+    }
+    octx.putImageData(img, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(off, 0, G / 4, G, G / 2, 0, 0, W, H);
+  }
+
+  // Slider runs from z = 10 (left) to today (right), linear in scale factor
+  var aMin = 1 / 11;
+  function fromSlider(v) {
+    var a = aMin + (1 - aMin) * v / 1000;
+    var z = 1 / a - 1;
+    out.textContent = "z = " + (z < 0.05 ? "0" : z < 10 ? z.toFixed(1) : z.toFixed(0));
+    slider.setAttribute("aria-valuetext", "redshift " + out.textContent.slice(4));
+    render(growth(a));
+  }
+  slider.addEventListener("input", function () { fromSlider(+slider.value); });
+
+  // One moment of motion: structure forms once, from z = 10 to today, on first load
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !window.requestAnimationFrame) {
+    fromSlider(+slider.value);
+  } else {
+    var start = null, dur = 2600;
+    (function step(ts) {
+      if (start === null) start = ts;
+      var k = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - k, 2);
+      slider.value = Math.round(eased * 1000);
+      fromSlider(+slider.value);
+      if (k < 1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+})();
+</script>
 </body>
 </html>
