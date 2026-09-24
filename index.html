@@ -6,6 +6,15 @@
 <title>Eylul Galimidi</title>
 <meta name="description" content="Eylul Galimidi, student at University of Michigan.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23121A2B'/%3E%3Cpath d='M6 9 L14 15 L25 8 M14 15 L12 25 M14 15 L26 21' stroke='%238FA8D6' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='14' cy='15' r='3' fill='%23F4E3BD'/%3E%3Ccircle cx='25' cy='8' r='1.8' fill='%23E3EAF6'/%3E%3Ccircle cx='26' cy='21' r='1.8' fill='%23E3EAF6'/%3E%3Ccircle cx='12' cy='25' r='1.5' fill='%23E3EAF6'/%3E%3C/svg%3E">
+<script>
+  /* Apply a saved theme before first paint, so there is no flash of the wrong colours */
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
@@ -59,7 +68,6 @@
   a:hover { text-decoration-thickness: 2px; }
   :focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 2px; }
 
-  /* Layout: a quiet index column on the left, reading column on the right */
   .shell {
     display: grid;
     grid-template-columns: 17rem minmax(0, 40rem);
@@ -108,6 +116,27 @@
   .nav a[aria-current="page"] { color: var(--ink); }
   .nav a[aria-current="page"]::before { opacity: 1; }
 
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 2.25rem;
+    padding: 0.35rem 0.85rem 0.35rem 0.7rem;
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    line-height: 1.2;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--muted); }
+  .theme-toggle svg { width: 1rem; height: 1rem; flex: none; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle[data-mode="dark"] .icon-sun { display: block; }
+  .theme-toggle[data-mode="dark"] .icon-moon { display: none; }
+
   main section[hidden] { display: none; }
   h2 {
     font-weight: 300;
@@ -120,7 +149,6 @@
   h3 { font-weight: 500; font-size: 1.1875rem; line-height: 1.35; margin: 0 0 0.4rem; }
   p { margin: 0 0 1.1rem; }
 
-  /* Figure 1: the one loud thing on the page */
   .figure { margin: 2.25rem 0 2.5rem; }
   .plate {
     position: relative;
@@ -204,8 +232,8 @@
 
   @media (max-width: 52rem) {
     .shell { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; padding: 2.5rem 1.4rem 3rem; }
-    .masthead { position: static; }
-    .name { font-size: 1.9rem; }
+    .masthead { position: relative; top: auto; }
+    .name { font-size: 1.9rem; padding-right: 3rem; }
     .role { margin-bottom: 1.4rem; }
     .nav {
       display: flex;
@@ -220,6 +248,18 @@
     .nav li + li { margin-top: 0; }
     .nav a::before { display: none; }
     .nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 0.35em; }
+    /* On narrow screens the toggle becomes an icon-only button beside the name */
+    .theme-toggle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      width: 2.4rem;
+      height: 2.4rem;
+      padding: 0;
+      justify-content: center;
+    }
+    .theme-toggle .theme-label { display: none; }
     h2 { font-size: 1.9rem; }
     body { font-size: 1.125rem; }
   }
@@ -247,6 +287,16 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.5 13.2A8.5 8.5 0 1 1 10.8 3.5a6.6 6.6 0 0 0 9.7 9.7z"/>
+      </svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>
+      </svg>
+      <span class="theme-label">Dark mode</span>
+    </button>
   </header>
 
   <main>
@@ -390,6 +440,36 @@
 
 <script>
 (function () {
+  /* ---------- Light/dark toggle ---------- */
+  // With no saved choice the page follows the system setting; clicking pins a choice in localStorage.
+  var root = document.documentElement;
+  var toggle = document.getElementById("theme-toggle");
+  var toggleLabel = toggle.querySelector(".theme-label");
+  var systemDark = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+  function currentTheme() {
+    var t = root.getAttribute("data-theme");
+    if (t === "light" || t === "dark") return t;
+    return systemDark && systemDark.matches ? "dark" : "light";
+  }
+  function syncToggle() {
+    var now = currentTheme(), next = now === "dark" ? "light" : "dark";
+    toggle.setAttribute("data-mode", now);
+    toggleLabel.textContent = next === "dark" ? "Dark mode" : "Light mode";
+    toggle.setAttribute("aria-label", "Switch to " + next + " mode");
+  }
+  toggle.addEventListener("click", function () {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (e) {}
+    syncToggle();
+  });
+  if (systemDark) {
+    if (systemDark.addEventListener) systemDark.addEventListener("change", syncToggle);
+    else if (systemDark.addListener) systemDark.addListener(syncToggle);
+  }
+  syncToggle();
+
   /* ---------- Section switching (works on GitHub Pages, no build step) ---------- */
   var ids = ["about", "research", "publications", "contact"];
   var links = document.querySelectorAll(".nav a");
